@@ -1,0 +1,90 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Structure representing a ticket
+struct Ticket {
+    int id;
+    string description;
+    string status;
+};
+
+// Function to add a new ticket
+void addTicket(vector<Ticket>& tickets) {
+    Ticket newTicket;
+    cout << "Enter ticket ID: ";
+    cin >> newTicket.id;
+    cin.ignore(); // Ignore the newline character
+    cout << "Enter ticket description: ";
+    getline(cin, newTicket.description);
+    newTicket.status = "Open"; // Set default status to "Open"
+    tickets.push_back(newTicket);
+    cout << "Ticket added successfully!\n";
+}
+
+// Function to display all tickets
+void displayTickets(const vector<Ticket>& tickets) {
+    if (tickets.empty()) {
+        cout << "No tickets found.\n";
+    } else {
+        cout << "ID\tDescription\tStatus\n";
+        for (const Ticket& ticket : tickets) {
+            cout << ticket.id << "\t" << ticket.description << "\t" << ticket.status << "\n";
+        }
+    }
+}
+
+// Function to update the status of a ticket
+void updateTicketStatus(vector<Ticket>& tickets) {
+    int id;
+    cout << "Enter ticket ID: ";
+    cin >> id;
+    bool found = false;
+    for (Ticket& ticket : tickets) {
+        if (ticket.id == id) {
+            cout << "Enter new status: ";
+            cin.ignore(); // Ignore the newline character
+            getline(cin, ticket.status);
+            cout << "Ticket status updated successfully!\n";
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        cout << "Ticket not found.\n";
+    }
+}
+
+int main() {
+    vector<Ticket> tickets;
+
+    int choice;
+    while (true) {
+        cout << "\nTicket Management System\n";
+        cout << "------------------------\n";
+        cout << "1. Add a new ticket\n";
+        cout << "2. Display all tickets\n";
+        cout << "3. Update ticket status\n";
+        cout << "4. Quit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addTicket(tickets);
+                break;
+            case 2:
+                displayTickets(tickets);
+                break;
+            case 3:
+                updateTicketStatus(tickets);
+                break;
+            case 4:
+                cout << "Thank you for using the Ticket Management System. Goodbye!\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+}
